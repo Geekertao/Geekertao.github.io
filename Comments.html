@@ -1,32 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-    <style>
-        #gitalk-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-<body>
-    <div id="gitalk-container"></div>
-    <script>
-    var gitalk = new Gitalk({
-        clientID: '443e4060f17176d6e482', //clientID 
-        clientSecret: 'd8537916ee1c57b35a7c4a415456f9463022ebb6', //clientSecret
-        repo: 'Comments-section', // 评论仓库名
-        owner: 'avanjidehutao',
-        admin: ['avanjidehutao'], //管理人
-        id: location.pathname, // 返回当前 URL 的路径部分作为id
-        language:'zh-CN', //语言
-        distractionFreeMode: false  // 无干扰模式
-    })
-    gitalk.render('gitalk-container')
-    </script>
-</body>
-</html>
+<script src="https://giscus.app/client.js"
+        data-repo="avanjidehutao/avanjidehutao.github.io"
+        data-repo-id="R_kgDOLtpEww"
+        data-category="[在此输入分类名]"
+        data-category-id="[在此输入分类 ID]"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
