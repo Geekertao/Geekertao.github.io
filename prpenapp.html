@@ -4,11 +4,110 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>点读笔应用下载站</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+	    body {
+  padding: 0;
+  margin: 0;
+}
 
+.nav-items {
+  background-color: rgba(0, 0, 0, .82);
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 44px;
+  left: 0;
+  transform: scaleY(0);
+  transition: transform .3s ease-in-out, opacity .3s ease-in-out .3s;
+  transform-origin: 50% 0;
+  opacity: 0;
+}
 
+#toggler:checked ~ .nav-items {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+ul {
+  margin-top: 1em;
+}
+
+ul li {
+  color: #fff;
+}
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: #000;
+}
+
+#toggler:checked + label .box {
+  background-color: cyan;
+}
+
+#toggler {
+  display: none;
+}
+
+.hambuger-container {
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 18px;
+}
+
+.hambuger-container span {
+  display: block;
+  height: 1px;
+  background-color: #fff;
+  position: relative;
+  transition: transform .3s ease-in-out, top .3s ease-in-out .3s;
+  top: 0;
+}
+
+.hambuger-container span:nth-child(2) {
+  margin-top: 7px;
+}
+
+#toggler:checked + label .hambuger-container span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 4px;
+  transition: top .3s ease-in-out, transform .3s ease-in-out .3s;
+}
+
+#toggler:checked + label .hambuger-container span:nth-child(2) {
+  transform: rotate(-45deg);
+  top: -4px;
+  transition: top .3s ease-in-out, transform .3s ease-in-out .3s;
+}
+
+header {
+  height: 44px;
+  background-color: #000;
+  padding: 0 18px;
+}
+    </style>
 </head>
 <body>
+<header>
+  <input type="checkbox" id="toggler">
 
+  <label for="toggler">
+    <span class="hambuger-container">
+      <span></span>
+      <span></span>
+    </span>
+  </label>
+  
+  <div class="nav-items">
+    <ul>
+      <li><a href="https://avanjidehutao.github.io/prpenapp.html">首页/a></li>
+      <li><a href="https://avanjidehutao.github.io/lessons.html">破解教程</a></li>
+      <li><a href="https://avanjidehutao.github.io/">导航页</a></li>    
+    </ul>
+  </div>
+</header>
 
 	
 <h1>点读笔应用下载站</h1>
