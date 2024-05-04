@@ -37,6 +37,7 @@ h1 {
     width: calc(33.333% - 20px);
     text-align: center;
     transition: transform 0.3s ease;
+    justify-content: center;
 }
 
 .app:hover {
