@@ -27,7 +27,6 @@ h1 {
 }
 
 .app {
-    position: relative;
     background: rgba(255, 255, 255, 0.1); /* 毛玻璃效果 */
     backdrop-filter: blur(10px);
     border: 2px solid #ffd700; /* 金色边框 */
