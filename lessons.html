@@ -160,7 +160,7 @@ header {
     <button class="button-view" id="watchTutorialButton" onclick="showVideo()">观看@爱玩机的胡桃 的视频</button>
     <button class="button-view" id="watchTutorialButton2" onclick="showVideo2()">观看@轩辕灵宫 的视频</button>
     <button class="button-view" id="watchTutorialButton3" onclick="showVideo3()">观看@荔枝 的视频</button>
-
+    <button class="button-view" id="watchTutorialButton" onclick="showVideo1()">观看@爱玩机的胡桃 的视频2</button>
 
 <script>
 function showVideo() {
@@ -168,6 +168,12 @@ function showVideo() {
     videoFrame.src = "https://video.weibo.com/show?fid=1034:5030651372437525";
     document.getElementById('videoPlayer').style.display = "block";
 }
+
+function showVideo1() {
+    var videoFrame = document.getElementById('videoFrame');
+    videoFrame.src = "https://video.weibo.com/show?fid=1034:5030769584963627";
+    document.getElementById('videoPlayer').style.display = "block";
+}     
 
 function showVideo2() {
     var videoFrame = document.getElementById('videoFrame');
