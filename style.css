@@ -15,10 +15,14 @@ body {
 
 h1 {
     text-align: center;
-    color: #ffd700; /* 标题颜色为金色 */
+    color: #ffd700; /* 标题颜色为 */
     margin-bottom: 40px;
 }
-
+h2 {
+    text-align: center;
+    color: #d3d3d3; /* 标题颜色为金色 */
+    margin-bottom: 40px;
+}
 .app-list {
     display: flex;
     flex-wrap: wrap;
