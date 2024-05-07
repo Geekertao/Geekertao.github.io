@@ -67,6 +67,16 @@ function showVideo() {
     videoFrame.src = "https://app.webadb.com";
     document.getElementById('videoPlayer').style.display = "block";
 }
+         navigator.usb
+  .requestDevice({ filters: [{ vendorId: 0x2341 }] })
+  .then((device) => {
+    console.log(device.productName); // "Arduino Micro"
+    console.log(device.manufacturerName); // "Arduino LLC"
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
 </script>
      
 </body>
