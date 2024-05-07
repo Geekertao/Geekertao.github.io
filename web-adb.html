@@ -67,14 +67,23 @@ function showVideo() {
     videoFrame.src = "https://app.webadb.com";
     document.getElementById('videoPlayer').style.display = "block";
 }
-         navigator.usb
-  .requestDevice({ filters: [{ vendorId: 0x2341 }] })
-  .then((device) => {
-    console.log(device.productName); // "Arduino Micro"
-    console.log(device.manufacturerName); // "Arduino LLC"
+         navigator.usb.requestDevice({ filters: [...] })
+  .then(device => {
+    // 用户已授权访问USB设备
+    // 可以使用device进行USB通信
   })
-  .catch((error) => {
-    console.error(error);
+  .catch(error => {
+    // 处理获取USB设备许可失败的情况
+  });
+     device.open()
+  .then(() => device.selectConfiguration(1))
+  .then(() => device.claimInterface(2))
+  .then(() => device.transferOut(2, new Uint8Array([0x01, 0x02]))
+  .then(result => {
+    // 发送数据成功
+  })
+  .catch(error => {
+    // 处理USB通信失败的情况
   });
 
 </script>
