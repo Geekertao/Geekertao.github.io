@@ -174,7 +174,9 @@ header {
     <button class="button-view" id="watchTutorialButton2" onclick="showVideo2()">观看@轩辕灵宫 的视频</button>
     <button class="button-view" id="watchTutorialButton3" onclick="showVideo3()">观看@荔枝 的视频</button>
     <button class="button-view" id="watchTutorialButton" onclick="showVideo1()">观看@爱玩机的胡桃 的视频2</button>
-
+<center>
+        浏览量：<span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span>👀 | 访客数：<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>👦
+</center>
 <script>
 function showVideo() {
     var videoFrame = document.getElementById('videoFrame');
@@ -200,6 +202,7 @@ function showVideo3() {
     document.getElementById('videoPlayer').style.display = "block";
 }
 </script>
-     
+     <!-- 引入不蒜子计数 -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
