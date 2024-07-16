@@ -564,3 +564,23 @@ button:hover {
 .nav-list li:hover {
     background-color: #333;
 }
+.container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid gold;
+        border-radius: 10px;
+        animation: fadeIn 1s ease-out;
+}
+.contact-info {
+        margin: 20px 0;
+        padding: 10px;
+        background: #222;
+        border: 1px solid gold;
+        border-radius: 5px;
+    }
+
+    .contact-info:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+    }
