@@ -18,6 +18,9 @@ h1 {
     color: #ffd700; /* 标题颜色为 */
     margin-bottom: 40px;
 }
+a  {color: gold; 
+   text-decoration: none
+   }
 
 .app-list {
     display: flex;
