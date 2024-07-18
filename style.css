@@ -82,7 +82,23 @@ button:hover {
     background-color: #ffc107; /* 鼠标悬停时的金黄色背景 */
 }
 
-
+.app-container { 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+} 
+/* 为了响应式，确保在小屏设备上也能良好显示 */ 
+@media (max-width: 600px) { 
+    .app { flex: 0 0 calc(50% - 10px);
+    /* 在较小屏幕上占据50%宽度，适应最多2个应用每行 */
+         }
+}
+/* 可选：进一步优化更小屏幕的显示 */ 
+@media (max-width: 400px) {
+    .app { flex: 0 0 calc(100% - 10px); 
+          /* 占据100%宽度，即每个应用独占一行 */ 
+         } 
+}
 
 
 .single-column .app {
