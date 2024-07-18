@@ -14,9 +14,16 @@ function downloadApp(downloadUrl) {
 }
 
 function toggleLayout() {
-            var container = document.querySelector('.app-list');
-            container.classList.toggle('single-column');
-        }
+    var appContainer = document.querySelector('.app-container');
+    var toggleButton = document.getElementById('toggleButton');
+    if (appContainer.classList.contains('single-column')) {
+        appContainer.classList.remove('single-column');
+        toggleButton.textContent = '切换至点读笔视图';
+    } else {
+        appContainer.classList.add('single-column');
+        toggleButton.textContent = '切换至手机视图';
+    }
+}
         
 
 
