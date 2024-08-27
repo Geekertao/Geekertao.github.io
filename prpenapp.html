@@ -6,6 +6,54 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="icon" type="image/x-icon" href="Image/favicon.ico">
     <style>
+	    .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #000000;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 10px; /* 添加圆角 */
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 48px; /* 增大字体大小 */
+            font-weight: bold;
+            cursor: not-allowed; /* 初始状态为不可点击 */
+            padding: 10px; /* 增加内边距 */
+            border-radius: 50%; /* 圆形按钮 */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .close-enabled {
+            cursor: pointer;
+            background-color: #f1f1f1;
+        }
+
+        .close-enabled:hover {
+            background-color: #ddd;
+        }
+   
 @keyframes fadeIn {
         from {
             opacity: 0;
@@ -135,7 +183,12 @@ header {
 <img src="Image/favicon.ico">	
 </center>
 	
-
+<center>
+	<button id="openModal">查看破解警告及公告</button>
+</center>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
 <div class="container">
         <h1>破解警告</h1>
 	<div class="contact-info">
@@ -164,7 +217,7 @@ header {
             <h2>目前下载站的下载链接已修复，可直接点击下载！！！<br>哔哩终端文件下载后需删去后缀名".json"</h2>
 	</div>
 	</div>  
-
+    </div></div>
 
 <div id="appsContainer">
 	<div class="app-container single-column">	
@@ -314,6 +367,70 @@ header {
     <script src="script.js"></script>
 	<!-- 引入不蒜子计数 -->
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+    // 获取模态框
+    var modal = document.getElementById("myModal");
+
+    // 获取关闭按钮
+    var span = document.getElementsByClassName("close")[0];
+
+    // 获取打开按钮
+    var btn = document.getElementById("openModal");
+
+    // 标记是否是第一次自动打开
+    var isFirstAutoOpen = true;
+
+    // 记录模态框打开的时间戳
+    var openTimestamp = null;
+
+    // 当点击按钮时显示模态框
+    btn.onclick = function() {
+        modal.style.display = "block";
+        openTimestamp = Date.now(); // 记录打开时间
+        isFirstAutoOpen = false; // 非第一次自动打开
+        enableCloseButton(); // 立即启用关闭按钮
+    }
+
+    // 当页面加载完成后自动打开弹窗
+    window.onload = function() {
+        // 模拟按钮点击事件，打开模态框
+        btn.click();
+        isFirstAutoOpen = true; // 第一次自动打开
+        disableCloseButton(); // 禁用关闭按钮
+    }
+
+    // 禁用关闭按钮
+    function disableCloseButton() {
+        span.classList.remove("close-enabled");
+        span.style.pointerEvents = "none";
+        span.style.opacity = "0.5";
+        span.onclick = null; // 移除点击事件
+    }
+
+    // 启用关闭按钮
+    function enableCloseButton() {
+        span.classList.add("close-enabled");
+        span.style.pointerEvents = "auto";
+        span.style.opacity = "1";
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+    }
+
+    // 检查是否允许关闭模态框
+    window.setTimeout(function() {
+        if (isFirstAutoOpen) {
+            enableCloseButton();
+        }
+    }, 10000);
+
+    // 当用户点击窗口外部时关闭模态框
+    window.onclick = function(event) {
+        if (event.target == modal && !isFirstAutoOpen) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>
   
