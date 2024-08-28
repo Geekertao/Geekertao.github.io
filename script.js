@@ -18,10 +18,10 @@ function toggleLayout() {
     var toggleButton = document.getElementById('toggleButton');
     if (appContainer.classList.contains('single-column')) {
         appContainer.classList.remove('single-column');
-        toggleButton.textContent = '切换至点读笔视图';
+        toggleButton.textContent = '切换至点读笔/手机视图';
     } else {
         appContainer.classList.add('single-column');
-        toggleButton.textContent = '切换至手机视图';
+        toggleButton.textContent = '切换至电脑视图';
     }
 }
         
