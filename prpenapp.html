@@ -166,6 +166,12 @@ header {
   background-color: #000;
   padding: 0 18px;
 }
+	 /*禁用弹窗下页面滚动*/
+	 .no-scroll {
+    overflow: hidden;
+    height: 100%;
+}
+
 	    
     </style>
 </head>
@@ -241,6 +247,7 @@ header {
         <h1>公告&更新日志</h1>
         <div class="contact-info">
             <h2>目前下载站的下载链接已修复，可直接点击下载！！！<br>哔哩终端文件下载后需删去后缀名".json"<br>界面变动：将破解警告和公告整合进弹窗内</h2>
+		<h3>唯趣应用商店因服务器开摆，所以不能正常使用，暂不提供下载！<h3>
 	</div>
 	</div> 
 
@@ -290,7 +297,7 @@ header {
         <h2>唯趣应用商店（安卓5.0支持修改版）</h2>
 <h3>分类:点读笔软件</h3>
         <p>有非常多的支持Android5.0的应用    注：若安装程序提示安装包解析失败则为不支持该安卓版本（安卓版本低）</p>
-        <button onclick="downloadApp('https://api.pearktrue.cn/api/123panparse/?url=https://www.123pan.cn/s/bac0jv-dhHTv')">下载 App</button>
+        <button onclick="download('https://api.pearktrue.cn/api/123panparse/?url=https://www.123pan.cn/s/bac0jv-dhHTv')">暂不提供下载，详情请见公告</button>
 </div>
 
 <div class="app">
@@ -437,16 +444,28 @@ header {
 
     // 当点击按钮时显示模态框
     btn.onclick = function() {
-        modal.style.display = "block";
+        showAndDisableScroll();
         openTimestamp = Date.now(); // 记录打开时间
         isFirstAutoOpen = false; // 非第一次自动打开
         enableCloseButton(); // 立即启用关闭按钮
     }
 
+    // 显示模态框并禁用滚动
+    function showAndDisableScroll() {
+        modal.style.display = "block";
+        document.body.classList.add('no-scroll');
+    }
+
+    // 隐藏模态框并启用滚动
+    function hideAndEnableScroll() {
+        modal.style.display = "none";
+        document.body.classList.remove('no-scroll');
+    }
+
     // 当页面加载完成后自动打开弹窗
     window.onload = function() {
         // 模拟按钮点击事件，打开模态框
-        btn.click();
+        showAndDisableScroll();
         isFirstAutoOpen = true; // 第一次自动打开
         disableCloseButton(); // 禁用关闭按钮
     }
@@ -465,7 +484,7 @@ header {
         span.style.pointerEvents = "auto";
         span.style.opacity = "1";
         span.onclick = function() {
-            modal.style.display = "none";
+            hideAndEnableScroll();
         };
     }
 
@@ -479,10 +498,11 @@ header {
     // 当用户点击窗口外部时关闭模态框
     window.onclick = function(event) {
         if (event.target == modal && !isFirstAutoOpen) {
-            modal.style.display = "none";
+            hideAndEnableScroll();
         }
     }
 </script>
+
 </body>
 </html>
   
