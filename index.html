@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Google Gemini WebChat</title>
+  <style>
+    /* 全局样式 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    /* 整体布局：侧边栏 + 主聊天区域 */
+    .main-container {
+      display: flex;
+      height: 100%;
+    }
+    
+    /* 侧边栏样式 */
+    .sidebar {
+      width: 250px;
+      background-color: #202123;
+      color: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    
+    .new-conversation-button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .new-conversation-button:hover {
+      background-color: #0056b3;
+    }
+    
+    #conversationList {
+      list-style: none;
+      padding: 0;
+    }
+    
+    #conversationList li {
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: #333;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    #conversationList li.active {
+      background-color: #007bff;
+    }
+    
+    /* 主聊天区域样式 */
+    .container {
+      flex: 1;
+      margin: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .chat-log {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    .user-message {
+      background-color: #f5f5f5;
+      color: #333;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .ai-message {
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .input-container {
+      display: flex;
+      padding: 20px;
+      border-top: 1px solid #ccc;
+    }
+    
+    .input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .send-button {
+      margin-left: 10px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    /* 加载动画（旋转的圆圈） */
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #007bff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- 侧边栏：对话列表 -->
+    <div class="sidebar">
+    <!-- 在现有的sidebar中添加一个模型选择下拉菜单 -->
+<label for="modelSelect">选择AI模型</label>
+<select id="modelSelect" class="input" onchange="changeModel()">
+  <option value="gemini-1.5-pro-latest">Gemini1.5Pro最新</option>
+  <option value="gemini-2.0-pro-exp">Gemini2.0Pro实验</option>
+  <option value="gemini-2.0-flash-exp">Gemini2.0轻量实验</option>
+  <option value="gemini-2.0-flash">Gemini2.0轻量</option>
+  <!-- 你可以继续在这里添加更多模型 -->
+</select>
+      <h2>对话列表</h2>
+      <button class="new-conversation-button" onclick="newConversation()">新对话</button>
+      <ul id="conversationList"></ul>
+      <p>请注意:</p>
+      <p>网页对话数据不会保存，刷新页面即丢失</p>
+      <p>请确保没有重要内容未复制</p>
+    </div>
+    
+    <!-- 主聊天区域 -->
+    <div class="container">
+      <h1>Google Gemini</h1>
+      <div class="chat-log" id="chatLog"></div>
+      <!-- 加载动画 -->
+      <div id="loadingSpinner" class="spinner"></div>
+      <div class="input-container">
+        <input class="input" id="inputMessage" placeholder="请输入消息">
+        <button class="send-button" onclick="sendMessage()">发送</button>
+      </div>
+          <p>powered by <a href="https://b23.tv/sNy2p2d">Geekertao</a></p>
+    </div>
+  </div>
+
+  <script>
+    const chatLog = document.getElementById('chatLog');
+    const inputMessage = document.getElementById('inputMessage');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const conversationListEl = document.getElementById('conversationList');
+
+    // 存储所有对话，每个对话包含 id、title 和 messages 数组
+    let conversations = [];
+    let currentConversationId = null;
+    let conversationIdCounter = 1; // 用于生成对话 id
+
+    // 新建对话：创建对话对象、更新列表并加载该对话
+    function newConversation() {
+      const conversation = {
+        id: conversationIdCounter++,
+        title: "新对话 " + new Date().toLocaleTimeString(),
+        messages: []
+      };
+      conversations.push(conversation);
+      currentConversationId = conversation.id;
+      updateConversationList();
+      loadConversation();
+    }
+
+    // 更新侧边栏对话列表
+    function updateConversationList() {
+      conversationListEl.innerHTML = '';
+      conversations.forEach(convo => {
+        const li = document.createElement('li');
+        li.textContent = convo.title;
+        li.onclick = () => {
+          currentConversationId = convo.id;
+          updateConversationList(); // 切换 active 样式
+          loadConversation();
+        };
+        if (convo.id === currentConversationId) {
+          li.classList.add('active');
+        }
+        conversationListEl.appendChild(li);
+      });
+    }
+
+    // 加载当前对话的所有消息
+    function loadConversation() {
+      chatLog.innerHTML = '';
+      const conversation = conversations.find(convo => convo.id === currentConversationId);
+      if (conversation) {
+        conversation.messages.forEach(msg => {
+          addMessageToChatLog(msg.content, msg.className, false);
+        });
+      }
+    }
+
+    // 发送消息：将用户消息添加到当前对话，并调用 Gemini 接口获取回复
+    function sendMessage() {
+      const message = inputMessage.value.trim();
+      if (message === '') {
+        return;
+      }
+      addMessageToChatLog(message, 'user-message'); // 会自动存入当前对话中
+      inputMessage.value = '';
+      loadingSpinner.style.display = 'block';
+      sendRequestToChatGPT(message);
+    }
+
+    let selectedModel = 'gemini-1.5-pro-latest'; // 默认选择模型
+
+// 修改发送请求时使用的模型
+function changeModel() {
+  selectedModel = document.getElementById('modelSelect').value;
+}
+
+// 发送请求时，使用选中的模型，将之前的对话内容添加到请求中
+    function sendRequestToChatGPT(message) {
+      const conversation = conversations.find(convo => convo.id === currentConversationId);
+      const messagesForContext = conversation.messages.map(msg => ({
+        role: msg.className === 'user-message' ? 'user' : 'assistant', // 根据类名判断角色
+        content: msg.content
+      }));
+
+      const request = {
+        "model": selectedModel,
+        "messages": [
+          ...messagesForContext, // 添加之前的消息
+          { "role": "user", "content": message } // 添加当前消息
+        ]
+      };
+// 严禁在其他任何地方使用apikey
+  fetch('https://ai.geekertao.us.kg/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer AIzaSyDnV0o2uDSY5hQum04vLpx7DiP_d172QUw',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(request)
+  })
+  .then(response => response.json())
+  .then(data => {
+    const reply = data.choices[0].message.content;
+    addMessageToChatLog(reply, 'ai-message');
+  })
+  .catch(error => {
+    console.error('请求AI时出错:', error);
+    addMessageToChatLog('请求AI时出错', 'ai-message');
+  })
+  .finally(() => {
+    loadingSpinner.style.display = 'none';
+  });
+}
+
+    // 添加消息到聊天记录，同时可选地保存到当前对话记录
+    // 参数 addToConversation 为 false 时不再重复存储消息（例如加载对话时）
+    function addMessageToChatLog(message, className, addToConversation = true) {
+      const messageElement = document.createElement('div');
+      messageElement.textContent = message;
+      messageElement.classList.add(className);
+      chatLog.appendChild(messageElement);
+      chatLog.scrollTop = chatLog.scrollHeight;
+
+      if (addToConversation) {
+        const conversation = conversations.find(convo => convo.id === currentConversationId);
+        if (conversation) {
+          conversation.messages.push({ content: message, className: className });
+        }
+      }
+    }
+
+    // 页面加载时自动新建一个对话
+    newConversation();
+  </script>
+</body>
+</html>
