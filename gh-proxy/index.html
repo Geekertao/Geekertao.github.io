@@ -199,7 +199,7 @@
 						</svg>
 					</a>
 				</div>
-				<h1 class="title">GitHub 文件加速</h1>
+				<h1 class="title">GitHub文件及api加速</h1>
 
 				</center>
 				<form onsubmit="toSubmit(event)" class="search-container">
@@ -207,8 +207,8 @@
 						type="text" 
 						class="search-input"
 						name="q" 
-						placeholder="请输入 GitHub 文件链接"
-						pattern="^((https|http)://)?(github.com/.+?/.+?/(?:releases|archive|blob|raw|suites)|((?:raw|gist).(?:githubusercontent|github).com))/.+$" 
+						placeholder="请输入GitHub文件or api链接"
+						pattern="^((https|http)://)?(github.com/.+?/.+?/(?:releases|archive|blob|raw|suites)|((?:raw|gist|api).(?:githubusercontent|github).com))/.+$" 
 						required
 					>
 					<button type="submit" class="search-button">
@@ -219,7 +219,7 @@
 				</form>
 
 				<div class="tips">
-					<p>✨ 支持带协议头(https://)或不带的GitHub链接，更多用法见<a href="https://hunsh.net/archives/23/">文档说明</a></p>
+					<p>✨ 支持带协议头(https://)或不带的GitHub链接，api加速自5.25已支持！更多用法见<a href="https://hunsh.net/archives/23/">文档说明</a></p>
 					<p>🚀 release、archive使用cf加速，文件会跳转至JsDelivr</p>
 					<p>⚠️ 注意：暂不支持文件夹下载</p>
 				</div>
@@ -231,6 +231,7 @@
 					<p>📂 release文件：https://github.com/hunshcn/project/releases/download/v0.1.0/example.zip</p>
 					<p>💾 commit文件：https://github.com/hunshcn/project/blob/123/filename</p>
 					<p>🖨️ gist：https://gist.githubusercontent.com/cielpy/123/raw/cmd.py</p>
+					<p>☁️ api： https://api.github.com/repos/Geekertao/CF-Workers-GitHub-Proxy</p>
 				</div>
 				<p style="position: sticky;top: calc(100% - 2.5em);">
     由 <a style="color: #1E90FF" href="https://github.com/Geekertao/CF-Workers-GitHub-Proxy" target="_blank">CF-Workers-GitHub-Proxy</a> 
